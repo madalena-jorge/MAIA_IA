@@ -1,3 +1,4 @@
 node_modules
 .env
 carebridge.db
+*firebase-adminsdk*.json

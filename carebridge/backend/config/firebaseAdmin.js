@@ -3,20 +3,40 @@
  * Verifica tokens Google no servidor antes de emitir JWT da aplicação.
  */
 import admin from 'firebase-admin';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 let initialized = false;
+
+function loadServiceAccount() {
+  if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+    return JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+  }
+
+  const filePath = process.env.FIREBASE_SERVICE_ACCOUNT_FILE
+    || path.join(__dirname, '../carebridge-cb89b-firebase-adminsdk-fbsvc-eae0068b6d.json');
+
+  if (fs.existsSync(filePath)) {
+    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  }
+
+  return null;
+}
 
 export function initFirebaseAdmin() {
   if (initialized) return admin;
 
-  const serviceAccountJson = process.env.FIREBASE_SERVICE_ACCOUNT;
-  if (!serviceAccountJson) {
-    console.warn('⚠️  FIREBASE_SERVICE_ACCOUNT não definida — login Google desativado.');
-    return null;
-  }
-
   try {
-    const serviceAccount = JSON.parse(serviceAccountJson);
+    const serviceAccount = loadServiceAccount();
+    if (!serviceAccount) {
+      console.warn('⚠️  Firebase Admin não configurado — login Google desativado.');
+      return null;
+    }
+
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
     });
@@ -30,7 +50,12 @@ export function initFirebaseAdmin() {
 }
 
 export function isFirebaseConfigured() {
-  return Boolean(process.env.FIREBASE_SERVICE_ACCOUNT);
+  if (process.env.FIREBASE_SERVICE_ACCOUNT) return true;
+
+  const filePath = process.env.FIREBASE_SERVICE_ACCOUNT_FILE
+    || path.join(__dirname, '../carebridge-cb89b-firebase-adminsdk-fbsvc-eae0068b6d.json');
+
+  return fs.existsSync(filePath);
 }
 
 export async function verifyGoogleIdToken(idToken) {
