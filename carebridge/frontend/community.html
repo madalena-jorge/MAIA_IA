@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comunidade - CareBridge</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<!-- Menu de Navegação Global -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-primary d-flex align-items-center gap-2" href="dashboard.html">
+      <div class="d-flex align-items-center justify-content-center bg-primary bg-opacity-10 rounded-circle navbar-brand-icon">
+        <i class="bi bi-heart-pulse-fill text-primary"></i>
+      </div>
+      <span style="letter-spacing: -0.5px;">CareBridge</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="dashboard.html" data-i18n="nav.home"><i class="bi bi-house"></i> Início</a></li>
+        <li class="nav-item"><a class="nav-link" href="allycare.html" data-i18n="nav.chat"><i class="bi bi-chat-heart"></i> AllyCare Chat</a></li>
+        <li class="nav-item"><a class="nav-link" href="profile.html" data-i18n="nav.profile"><i class="bi bi-person"></i> O Meu Perfil</a></li>
+        <li class="nav-item"><a class="nav-link active" href="community.html" data-i18n="nav.community"><i class="bi bi-people"></i> Comunidade</a></li>
+        <li class="nav-item"><a class="nav-link" href="resources.html" data-i18n="nav.resources"><i class="bi bi-book"></i> Recursos</a></li>
+        <li class="nav-item"><a class="nav-link nav-logout" href="#" onclick="logout()" data-i18n="nav.logout"><i class="bi bi-box-arrow-right"></i> Sair</a></li>
+      </ul>
+      </div>
+  </div>
+</nav>
+
+<div class="container my-5 flex-grow-1 text-center d-flex flex-column justify-content-center align-items-center">
+  <div class="card p-5 border-0 rounded-4 shadow-sm" style="max-width: 600px;">
+    <i class="bi bi-people-fill display-2 text-primary mb-3"></i>
+    <h2 class="fw-bold text-dark" data-i18n="comm.title">Fórum da Comunidade</h2>
+    <p class="lead text-muted" data-i18n="comm.subtitle">Ligue-se a outros cuidadores, partilhe experiências e encontre apoio mútuo.</p>
+    
+    <div class="alert alert-warning mt-4 d-inline-block border-0 rounded-3">
+      <strong data-i18n="comm.coming_soon">Em Desenvolvimento:</strong> <span data-i18n="comm.coming_soon_desc">Esta funcionalidade está a ser preparada para as próximas fases.</span>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer text-light py-5 mt-auto">
+  <div class="container">
+    <div class="row g-4 pb-3 justify-content-between">
+      <div class="col-md-6 col-lg-5">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div class="footer-brand-circle">
+            <i class="bi bi-heart-pulse-fill"></i>
+          </div>
+          <span class="footer-brand">CareBridge</span>
+        </div>
+        <p class="footer-tagline mb-0" style="max-width:340px;" data-i18n="footer.tagline">Plataforma académica de apoio empático e estruturado a cuidadores de pessoas com demência.</p>
+      </div>
+      <div class="col-md-5 col-lg-4">
+        <p class="footer-heading mb-3" data-i18n="footer.support_lines">Linhas de Apoio</p>
+        <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
+          <li class="footer-text"><i class="bi bi-telephone text-primary me-2"></i><span data-i18n="footer.alzheimer">Alzheimer Portugal:</span> <strong class="text-white">213 610 460</strong></li>
+          <li class="footer-emergency-badge"><i class="bi bi-telephone-fill me-2"></i><span data-i18n="footer.emergency">Emergência Médica:</span> <strong>112</strong></li>
+          <li class="mt-2">
+            <span style="font-size:0.75rem; color:#8FA0B8; font-style:italic;" data-i18n="footer.disclaimer">⚠️ Não substitui aconselhamento médico profissional.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-copyright text-center">
+      &copy; <script>document.write(new Date().getFullYear())</script> <span data-i18n="footer.rights">CareBridge. Todos os direitos reservados.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/i18n.js"></script>
+<script>
+  function logout() {
+    localStorage.removeItem('carebridge_token');
+    localStorage.removeItem('carebridge_role');
+    window.location.href = 'index.html';
+  }
+</script>
+</body>
+</html>

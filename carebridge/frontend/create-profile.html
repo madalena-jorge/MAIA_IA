@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar Conta — CareBridge</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<!-- Menu de Navegação Simplificado para Registo -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-primary d-flex align-items-center gap-2" href="index.html">
+      <div class="d-flex align-items-center justify-content-center bg-primary bg-opacity-10 rounded-circle" style="width: 36px; height: 36px;">
+        <i class="bi bi-heart-pulse-fill text-primary"></i>
+      </div>
+      <span>CareBridge</span>
+    </a>
+  </div>
+</nav>
+
+<main class="container my-5 flex-grow-1">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="text-center mb-4">
+        <h1 class="fw-bold text-dark mb-2" id="pageTitle" style="font-size: 2rem;">Crie a sua Conta CareBridge</h1>
+        <p class="text-muted mb-4">Preencha os dados abaixo para personalizar a sua experiência de apoio.</p>
+      </div>
+
+      <!-- Indicador de Progresso -->
+      <div class="progress-steps mb-5">
+        <div class="progress-step active" id="step1">
+          <div class="progress-step-circle">1</div>
+          <span class="progress-step-label">Credenciais</span>
+        </div>
+        <div class="progress-step-line"></div>
+        <div class="progress-step" id="step2">
+          <div class="progress-step-circle">2</div>
+          <span class="progress-step-label">Tipo de Perfil</span>
+        </div>
+        <div class="progress-step-line"></div>
+        <div class="progress-step" id="step3">
+          <div class="progress-step-circle">3</div>
+          <span class="progress-step-label">Cuidador</span>
+        </div>
+        <div class="progress-step-line"></div>
+        <div class="progress-step" id="step4">
+          <div class="progress-step-circle">4</div>
+          <span class="progress-step-label">Pessoa Cuidada</span>
+        </div>
+      </div>
+
+      <form id="profileForm" class="needs-validation" novalidate>
+        <!-- Secção 1: Dados de Acesso -->
+        <div class="card card-accent-primary border-0 rounded-4 shadow-sm mb-4" id="sectionAccount">
+          <div class="card-header bg-white border-0 pt-4 pb-0">
+            <h5 class="profile-section-header text-dark m-0 d-flex align-items-center">
+              <span class="section-badge bg-primary bg-opacity-10 text-primary">1</span>
+              <i class="bi bi-shield-lock text-primary me-2"></i> Credenciais de Conta
+            </h5>
+          </div>
+          <div class="card-body pt-3 pb-4 px-4">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="regName" class="profile-form-label form-label">Nome Completo</label>
+                <input type="text" class="form-control profile-form-control bg-light" id="regName" placeholder="O seu nome" required>
+              </div>
+              <div class="col-md-6">
+                <label for="regEmail" class="profile-form-label form-label">Endereço de Email</label>
+                <input type="email" class="form-control profile-form-control bg-light" id="regEmail" placeholder="nome@exemplo.com" required>
+              </div>
+              <div class="col-md-6">
+                <label for="regPassword" class="profile-form-label form-label">Palavra-passe</label>
+                <input type="password" class="form-control profile-form-control bg-light" id="regPassword" placeholder="Mínimo 6 caracteres" required>
+              </div>
+              <div class="col-md-6">
+                <label for="regConfirmPassword" class="profile-form-label form-label">Confirmar Palavra-passe</label>
+                <input type="password" class="form-control profile-form-control bg-light" id="regConfirmPassword" placeholder="Repita a palavra-passe" required>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Secção 2: Tipo de Conta / Role -->
+        <div class="card card-accent-primary border-0 rounded-4 shadow-sm mb-4" id="sectionRole">
+          <div class="card-header bg-white border-0 pt-4 pb-0">
+            <h5 class="profile-section-header text-dark m-0 d-flex align-items-center">
+              <span class="section-badge bg-primary bg-opacity-10 text-primary">2</span>
+              <i class="bi bi-person-gear text-primary me-2"></i> Tipo de Perfil
+            </h5>
+          </div>
+          <div class="card-body pt-3 pb-4 px-4">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="accountType" class="profile-form-label form-label">Função / Tipo de Perfil</label>
+                <select class="form-select profile-form-control bg-light" id="accountType" required>
+                  <option value="user" selected>Cuidador Familiar / Informal</option>
+                  <option value="admin">Profissional de Saúde / Administrador</option>
+                </select>
+              </div>
+              <div class="col-md-6 d-none" id="keywordGroup">
+                <label for="accessKeyword" class="profile-form-label form-label text-danger">Palavra-chave de Acesso Profissional</label>
+                <input type="password" class="form-control profile-form-control bg-light border-danger border-opacity-50" id="accessKeyword" placeholder="Palavra-chave do sistema">
+                <div class="form-text text-danger small mt-1"><i class="bi bi-exclamation-triangle"></i> Requer validação especial pelo administrador.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Secção 3: Detalhes do Cuidador -->
+        <div class="card card-accent-success border-0 rounded-4 shadow-sm mb-4" id="sectionCaregiver">
+          <div class="card-header bg-white border-0 pt-4 pb-0">
+            <h5 class="profile-section-header text-dark m-0 d-flex align-items-center">
+              <span class="section-badge bg-success bg-opacity-10 text-success">3</span>
+              <i class="bi bi-person-heart text-success me-2"></i> Informações do Cuidador
+            </h5>
+          </div>
+          <div class="card-body pt-3 pb-4 px-4">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label for="cgAge" class="form-label small fw-semibold text-muted mb-1">Idade (Anos)</label>
+                <input type="number" class="form-control bg-light" id="cgAge" min="18" max="120" placeholder="Ex: 45">
+              </div>
+              <div class="col-md-4">
+                <label for="cgRelationship" class="form-label small fw-semibold text-muted mb-1">Relação com Pessoa Cuidada</label>
+                <select class="form-select bg-light" id="cgRelationship">
+                  <option value="">Selecione...</option>
+                  <option value="Cônjuge">Cônjuge</option>
+                  <option value="Filho/a">Filho/a</option>
+                  <option value="Outro Familiar">Outro Familiar</option>
+                  <option value="Profissional">Cuidador Profissional</option>
+                  <option value="Outro">Outro</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label for="cgExperience" class="form-label small fw-semibold text-muted mb-1">Nível de Experiência</label>
+                <select class="form-select bg-light" id="cgExperience">
+                  <option value="Iniciante">Iniciante (Pouco tempo)</option>
+                  <option value="Intermédio">Intermédio (Já lida com desafios comuns)</option>
+                  <option value="Experiente">Experiente (Vários anos de cuidados)</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="cgContact" class="form-label small fw-semibold text-muted mb-1">Telefone / Contacto</label>
+                <input type="text" class="form-control bg-light" id="cgContact" placeholder="Ex: +351 912 345 678">
+              </div>
+              <div class="col-md-6">
+                <label for="cgCountry" class="form-label small fw-semibold text-muted mb-1">País</label>
+                <input type="text" class="form-control bg-light" id="cgCountry" value="Portugal">
+              </div>
+              <div class="col-12">
+                <label for="cgConcerns" class="form-label small fw-semibold text-muted mb-1">Preocupações & Notas Pessoais</label>
+                <textarea class="form-control bg-light" id="cgConcerns" rows="3" placeholder="Quais os maiores medos, dúvidas ou cansaço que está a experienciar neste momento?"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Secção 4: Pessoa com Demência -->
+        <div class="card card-accent-info border-0 rounded-4 shadow-sm mb-4" id="sectionPatient">
+          <div class="card-header bg-white border-0 pt-4 pb-0">
+            <h5 class="profile-section-header text-dark m-0 d-flex align-items-center">
+              <span class="section-badge" style="background: rgba(90,155,213,0.12); color: #5A9BD5;">4</span>
+              <i class="bi bi-person-wheelchair text-info me-2"></i> Ficha da Pessoa Cuidada
+            </h5>
+          </div>
+          <div class="card-body pt-3 pb-4 px-4">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="ptName" class="form-label small fw-semibold text-muted mb-1">Nome Completo</label>
+                <input type="text" class="form-control bg-light" id="ptName" placeholder="Nome do paciente">
+              </div>
+              <div class="col-md-3">
+                <label for="ptAge" class="form-label small fw-semibold text-muted mb-1">Idade</label>
+                <input type="number" class="form-control bg-light" id="ptAge" placeholder="Ex: 78">
+              </div>
+              <div class="col-md-3">
+                <label for="ptDiagnosis" class="form-label small fw-semibold text-muted mb-1">Diagnóstico Conhecido</label>
+                <select class="form-select bg-light" id="ptDiagnosis">
+                  <option value="">Selecione...</option>
+                  <option value="Alzheimer">Doença de Alzheimer</option>
+                  <option value="Demência Vascular">Demência Vascular</option>
+                  <option value="Demência de Corpos de Lewy">Corpos de Lewy</option>
+                  <option value="Demência Frontotemporal">Frontotemporal</option>
+                  <option value="Outra / Não especificada">Outra / Não Especificada</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="ptEmergency" class="form-label small fw-semibold text-muted mb-1">Contacto Alternativo de Emergência</label>
+                <input type="text" class="form-control bg-light" id="ptEmergency" placeholder="Ex: Telefone de outro familiar ou médico">
+              </div>
+              <div class="col-md-6">
+                <label for="ptBeliefs" class="form-label small fw-semibold text-muted mb-1">Crenças Religiosas / Preferências Espirituais</label>
+                <input type="text" class="form-control bg-light" id="ptBeliefs" placeholder="Ex: Católico, Sem preferência, etc. (Opcional)">
+              </div>
+              
+              <div class="col-12">
+                <label for="ptHistory" class="form-label small fw-semibold text-muted mb-1">Histórico Clínico e Detalhes Importantes</label>
+                <textarea class="form-control bg-light" id="ptHistory" rows="3" placeholder="Problemas de saúde, cirurgias, hipertensão, diabetes ou recomendações médicas importantes..."></textarea>
+              </div>
+
+              <!-- medicações (inputs dinâmicos repetíveis) -->
+              <div class="col-12 border-top pt-3 mt-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <label class="form-label small fw-bold text-dark m-0"><i class="bi bi-capsule-capsule me-1 text-danger"></i> Medicações Atuais</label>
+                  <button type="button" class="btn btn-outline-danger btn-sm" id="addMedicationBtn"><i class="bi bi-plus-lg"></i> Adicionar Medicação</button>
+                </div>
+                <div id="medicationsContainer" class="d-flex flex-column gap-2">
+                  <!-- Inputs dynamically added here -->
+                  <div class="text-muted small italic py-2" id="noMedsText">Nenhuma medicação adicionada. Clique no botão acima para adicionar.</div>
+                </div>
+              </div>
+
+              <div class="col-12 border-top pt-3 mt-3">
+                <label for="ptAllergies" class="form-label small fw-semibold text-muted mb-1">Alergias Conocidas</label>
+                <input type="text" class="form-control bg-light" id="ptAllergies" placeholder="Medicamentos, alimentos ou alergias ambientais...">
+              </div>
+
+              <div class="col-12">
+                <label for="ptBehaviors" class="form-label small fw-semibold text-muted mb-1">Padrões de Comportamento & Preferências</label>
+                <textarea class="form-control bg-light" id="ptBehaviors" rows="2" placeholder="Agitação noturna, preferências alimentares, música que o/a acalma..."></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-5 mb-5 pt-2">
+          <a href="index.html" class="btn btn-link text-muted fw-semibold text-decoration-none" id="cancelBtn"><i class="bi bi-chevron-left"></i> Voltar ao Início</a>
+          <button type="submit" class="btn btn-primary px-5 fw-bold shadow" id="submitBtn" style="padding: 0.85rem 2.5rem; font-size: 1.05rem; border-radius: 0.75rem;">
+            <i class="bi bi-person-check-fill me-2"></i>Criar Perfil &amp; Registar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer text-light py-5 mt-auto">
+  <div class="container">
+    <div class="row g-4 pb-3 justify-content-between">
+      <div class="col-md-6 col-lg-5">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div class="footer-brand-circle">
+            <i class="bi bi-heart-pulse-fill"></i>
+          </div>
+          <span class="footer-brand">CareBridge</span>
+        </div>
+        <p class="footer-tagline mb-0" style="max-width:340px;">Plataforma académica de apoio empático e estruturado a cuidadores de pessoas com demência.</p>
+      </div>
+      <div class="col-md-5 col-lg-4">
+        <p class="footer-heading mb-3">Linhas de Apoio</p>
+        <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
+          <li class="footer-text"><i class="bi bi-telephone text-primary me-2"></i>Alzheimer Portugal: <strong class="text-white">213 610 460</strong></li>
+          <li class="footer-emergency-badge"><i class="bi bi-telephone-fill me-2"></i>Emergência Médica: <strong>112</strong></li>
+          <li class="mt-2">
+            <span style="font-size:0.75rem; color:#8FA0B8; font-style:italic;">⚠️ Não substitui aconselhamento médico profissional.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-copyright text-center">
+      &copy; <script>document.write(new Date().getFullYear())</script> CareBridge. Todos os direitos reservados.
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/create-profile.js"></script>
+</body>
+</html>
+

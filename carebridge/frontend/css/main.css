@@ -1,0 +1,808 @@
+/* 
+  CareBridge - CSS Global (Organização Arquitetural)
+  --------------------------------------------------
+  NOTA ACADÉMICA (DSR): 
+  Este ficheiro foi desenhado para ser o mais minimalista possível. 
+  A plataforma depende maioritariamente do sistema de classes utilitárias do Bootstrap 5 
+  para garantir responsividade nativa, consistência visual e um "codebase" limpo.
+  Apenas estilos específicos da identidade visual (branding) ou micro-interações 
+  são definidos aqui.
+*/
+
+/* ===========================================
+   1. VARIÁVEIS NATIVAS E TOKENS DE DESIGN
+   =========================================== */
+:root {
+  --primary-color: #4A82A4;
+  --primary-dark: #37637E;
+  --primary-light: #EBF2F6;
+  --secondary-color: #7FA98F;
+  --secondary-light: #F0F6F2;
+  --bg-color: #F7F9FC;
+  --text-main: #2D3748;
+  --emergency-color: #E0655A;
+  --emergency-light: #FDF2F1;
+  --assistant-bg: #FFFFFF;
+  --user-bg: #4A82A4;
+  --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+  --border-radius: 1rem;
+  --navbar-height: 80px; /* fallback; sobrescrito por JS em allycare.html */
+}
+
+/* ===========================================
+   2. BASE E TIPOGRAFIA
+   =========================================== */
+
+/* Font size base — aumentado para acessibilidade (público mais velho).
+   Todos os rem do Bootstrap escalam a partir daqui. */
+html {
+  font-size: 20px;
+}
+html.font-size-medium { font-size: 20px; }
+html.font-size-large  { font-size: 24px; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-main);
+  /* !important necessário: Bootstrap define background em body via utilitária .bg-light herdada */
+  background-color: var(--bg-color) !important;
+}
+
+/* Micro-interações globais */
+.btn,
+.nav-link,
+.form-control,
+.card,
+.chat-history-item,
+.list-group-item {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Foco em campos: override da cor padrão do Bootstrap */
+.form-control:focus {
+  /* !important necessário: Bootstrap usa box-shadow no :focus com alta especificidade */
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 0.25rem rgba(74, 130, 164, 0.25) !important;
+}
+
+/* ===========================================
+   3. NAVBAR — BLOCO ÚNICO CONSOLIDADO
+   Todas as regras de navbar estão aqui. Não adicionar regras de navbar 
+   noutros locais do ficheiro para evitar conflitos futuros.
+   =========================================== */
+
+.navbar {
+  padding-top: 0.85rem;
+  padding-bottom: 0.85rem;
+}
+
+/* Logo: ícone + texto */
+.navbar-brand {
+  gap: 0.55rem;
+}
+
+.navbar-brand-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+.navbar-brand-icon i {
+  font-size: 1.25rem;
+}
+
+.navbar-brand span {
+  font-size: 1.1rem;
+  letter-spacing: -0.3px;
+}
+
+/* 
+   Links de navegação — Desktop (≥992px)
+   - white-space: nowrap impede que "ícone + texto" quebrem para 2 linhas
+   - padding horizontal reduzido para caber todos os links numa linha
+     mesmo com font-size global em 20px
+   - font-size em rem relativo ao html:20px → 0.82rem ≈ 16.4px (legível e compacto)
+*/
+@media (min-width: 992px) {
+  .navbar-nav {
+    gap: 0.25rem;
+  }
+
+  .navbar-nav .nav-link {
+    white-space: nowrap;        /* CRÍTICO: impede quebra de linha */
+    border-radius: 2rem;
+    padding: 0.5rem 1.05rem;
+    font-weight: 500;
+    font-size: 0.92rem;
+    color: #5A6A85;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .navbar-nav .nav-link i {
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .navbar-nav .nav-link:hover {
+    color: var(--primary-color);
+    background-color: var(--primary-light);
+  }
+
+  .navbar-nav .nav-link.active {
+    /* !important necessário: Bootstrap .active define color via especificidade alta */
+    color: white !important;
+    background-color: var(--primary-color);
+  }
+
+  /* Link de logout: discreto mas visível */
+  .navbar-nav .nav-link.nav-logout {
+    color: #C0392B;
+    margin-left: 0.5rem;
+  }
+
+  .navbar-nav .nav-link.nav-logout:hover {
+    background-color: #FDF2F1;
+    color: #C0392B;
+  }
+}
+
+/* Mobile (collapsed): links têm tamanho normal, não há risco de quebra */
+@media (max-width: 991px) {
+  .navbar-nav .nav-link {
+    white-space: nowrap;
+    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+/* Avatar do utilizador */
+.navbar-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+}
+
+/* ===========================================
+   4. HERO SECTION
+   =========================================== */
+.hero-section {
+  background: linear-gradient(135deg, #EBF2F6 0%, #E2EDF3 100%);
+  color: var(--text-main);
+  padding: 5rem 2rem;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(74, 130, 164, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===========================================
+   5. CARDS E ACENTOS
+   =========================================== */
+.card {
+  box-shadow: var(--card-shadow);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+}
+
+/* !important necessário: estas classes são usadas como modificadores adicionais
+   sobre .card que tem border de baixa especificidade — sem !important o border-left
+   seria sobrescrito pela regra base .card border */
+.card-accent-primary { border-left: 4px solid var(--primary-color) !important; }
+.card-accent-success  { border-left: 4px solid var(--secondary-color) !important; }
+.card-accent-danger   { border-left: 4px solid var(--emergency-color) !important; }
+.card-accent-info     { border-left: 4px solid #5A9BD5 !important; }
+
+/* ===========================================
+   6. EMERGENCY BOX
+   =========================================== */
+.emergency-box {
+  background-color: var(--emergency-light);
+  border-left: 5px solid var(--emergency-color);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  color: var(--text-main);
+  box-shadow: var(--card-shadow);
+}
+
+/* ===========================================
+   7. CHAT UI (AllyCare)
+   =========================================== */
+.chat-container {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.messages-area {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  /* !important necessário: Bootstrap .bg-light sobrescreveria background-color */
+  background-color: #F8FAFC !important;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.message {
+  max-width: 75%;
+  padding: 14px 20px;
+  border-radius: 1.25rem;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.message.assistant {
+  align-self: flex-start;
+  background-color: var(--assistant-bg);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom-left-radius: 4px;
+  color: var(--text-main);
+}
+
+.message.user {
+  align-self: flex-end;
+  background-color: var(--user-bg);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+/* Chat history sidebar items */
+.chat-history-item {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  background-color: #FFFFFF;
+  margin-bottom: 0.5rem;
+}
+
+.chat-history-item:hover {
+  background-color: var(--primary-light);
+  border-color: rgba(74, 130, 164, 0.2);
+}
+
+.chat-history-item.active {
+  /* !important necessário: Bootstrap list-group-item.active define bg e color com alta especificidade */
+  background-color: var(--primary-light) !important;
+  border-color: var(--primary-color) !important;
+  color: var(--text-main) !important;
+  font-weight: 600;
+}
+
+.chat-history-actions {
+  display: none;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  gap: 5px;
+  background: transparent;
+  padding-left: 10px;
+}
+
+.chat-history-item:hover .chat-history-actions,
+.chat-history-item.active .chat-history-actions {
+  display: flex;
+}
+
+.action-icon {
+  cursor: pointer;
+  color: #8A9BB5;
+  font-size: 0.9rem;
+  padding: 3px;
+  border-radius: 4px;
+}
+
+.action-icon:hover {
+  background-color: rgba(74, 130, 164, 0.1);
+  color: var(--primary-color);
+}
+
+.action-icon.star-active {
+  color: #FFC107;
+}
+
+/* Formatação Markdown nas respostas do assistente */
+.message.assistant p             { margin-bottom: 0.8rem; }
+.message.assistant p:last-child  { margin-bottom: 0; }
+.message.assistant ul,
+.message.assistant ol            { padding-left: 1.2rem; margin-bottom: 0.8rem; }
+
+/* Textarea do chat: auto-resize */
+#messageInput {
+  resize: none;
+  overflow-y: auto;
+  min-height: 52px;
+  max-height: 130px;
+  line-height: 1.6;
+  transition: height 0.1s ease;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+}
+
+#chatForm {
+  /* !important necessário: Bootstrap .d-flex não define align-items, mas outra regra .form inline pode */
+  align-items: flex-end !important;
+}
+
+/* ===========================================
+   7b. ALLYCARE CHAT — LAYOUT FIXO (SCROLL INTERNO APENAS NA ÁREA DE MENSAGENS)
+
+   REGRA FUNDAMENTAL:
+   - html e body ficam SEMPRE com height:100% + overflow:hidden nesta página.
+   - Só .messages-area tem overflow-y:auto — é o ÚNICO elemento com scroll.
+   - Nenhum outro elemento pode crescer além do viewport.
+
+   A classe .chat-page é aplicada APENAS ao <body> de allycare.html.
+   =========================================== */
+
+/* 1. Bloquear scroll do browser nesta página específica */
+html:has(body.chat-page),
+body.chat-page {
+  height: 100%;
+  overflow: hidden; /* impede SEMPRE o scroll da página toda */
+  margin: 0;
+  padding: 0;
+}
+
+/* 2. Wrapper principal: altura FIXA (nunca cresce além do viewport) */
+.allycare-page-wrapper {
+  height: calc(100vh - var(--navbar-height));
+  max-height: calc(100vh - var(--navbar-height)); /* segurança extra */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 3. Container e row intermédios: nunca crescem, nunca transbordam */
+.allycare-page-wrapper .chat-outer-container {
+  flex: 1 1 auto;
+  min-height: 0;        /* CRÍTICO em flexbox */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.allycare-page-wrapper .chat-row {
+  flex: 1 1 auto;
+  min-height: 0;        /* CRÍTICO em flexbox */
+  overflow: hidden;
+  display: flex;
+}
+
+/* 4. Sidebar: scroll interno próprio (lista de conversas não empurra a página) */
+.allycare-page-wrapper .chat-sidebar {
+  min-height: 0;
+  overflow: hidden;     /* o scroll está na #chatHistoryList, não aqui */
+  display: flex;
+  flex-direction: column;
+}
+
+/* A lista de histórico dentro da sidebar tem o seu próprio scroll */
+.allycare-page-wrapper .chat-sidebar #chatHistoryList {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* 5. Coluna principal do chat: nunca cresce além do espaço disponível */
+.allycare-page-wrapper .chat-main {
+  min-height: 0;        /* CRÍTICO em flexbox */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+/* 6. ÚNICO elemento com scroll: a área de mensagens */
+.allycare-page-wrapper .messages-area {
+  flex: 1 1 auto;
+  min-height: 0;        /* CRÍTICO: sem isto o overflow-y:auto não funciona */
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+
+/* ===========================================
+   8. TABS PERSONALIZADAS (Perfil)
+   =========================================== */
+.nav-pills-custom .nav-link {
+  border-radius: 0.5rem;
+  color: var(--text-main);
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  font-weight: 500;
+  margin-right: 0.5rem;
+}
+
+.nav-pills-custom .nav-link.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.nav-pills-custom .nav-link:hover:not(.active) {
+  background-color: var(--primary-light);
+}
+
+/* ===========================================
+   9. CRIAR CONTA: Progresso em passos
+   =========================================== */
+.progress-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 2.5rem;
+}
+
+.progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.progress-step-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #E8EDF5;
+  border: 2px solid #D0D9E8;
+  color: #8A9BB5;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.progress-step.active .progress-step-circle {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+  box-shadow: 0 4px 12px rgba(74, 130, 164, 0.35);
+}
+
+.progress-step.done .progress-step-circle {
+  background: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: white;
+}
+
+.progress-step-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #8A9BB5;
+  margin-top: 0.4rem;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.progress-step.active .progress-step-label {
+  color: var(--primary-color);
+}
+
+.progress-step-line {
+  height: 2px;
+  width: 60px;
+  background: #D0D9E8;
+  margin-top: -20px;
+  z-index: 0;
+}
+
+.profile-section-header {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.profile-section-header .section-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1rem;
+  margin-right: 0.6rem;
+  flex-shrink: 0;
+}
+
+.profile-form-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4A5568;
+  margin-bottom: 0.35rem;
+}
+
+.profile-form-control {
+  padding: 0.7rem 1rem;
+  font-size: 0.95rem;
+  border-radius: 0.6rem;
+}
+
+/* Demo account card */
+.demo-account-card {
+  background: #FFFFFF;
+  border: 1px dashed rgba(74, 130, 164, 0.3);
+  border-radius: 0.75rem;
+}
+
+/* ===========================================
+   10. DROPZONE DE UPLOAD
+   =========================================== */
+.dropzone-area {
+  border: 2px dashed #B8C9D8;
+  border-radius: 0.75rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  background: #F8FAFC;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.dropzone-area:hover,
+.dropzone-area.dragover {
+  border-color: var(--primary-color);
+  background: var(--primary-light);
+}
+
+.dropzone-area input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.dropzone-icon {
+  font-size: 2rem;
+  color: #8FA0B8;
+  margin-bottom: 0.5rem;
+}
+
+.dropzone-text {
+  font-size: 0.9rem;
+  color: #5A6A85;
+}
+
+.dropzone-text strong {
+  color: var(--primary-color);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.dropzone-hint {
+  font-size: 0.78rem;
+  color: #8FA0B8;
+  margin-top: 0.3rem;
+}
+
+.dropzone-file-preview {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #FFFFFF;
+  border: 1px solid rgba(74, 130, 164, 0.2);
+  border-radius: 0.6rem;
+  padding: 0.75rem 1rem;
+  margin-top: 0.75rem;
+}
+
+.dropzone-file-icon {
+  font-size: 1.75rem;
+  color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.dropzone-file-info {
+  flex: 1;
+  text-align: left;
+}
+
+.dropzone-file-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  word-break: break-all;
+}
+
+.dropzone-file-size {
+  font-size: 0.78rem;
+  color: #8FA0B8;
+}
+
+.dropzone-remove-btn {
+  background: none;
+  border: none;
+  color: #8A9BB5;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+
+.dropzone-remove-btn:hover {
+  color: var(--emergency-color);
+}
+
+/* ===========================================
+   11. BOTÃO UPLOAD: DISABLED vs ATIVO
+   =========================================== */
+
+/* Estado DESATIVADO */
+#submitDocBtn:disabled {
+  /* !important necessário: Bootstrap .btn-primary define bg/border/color com alta especificidade
+     e não pode ser vencido sem !important quando o botão está disabled */
+  background-color: #D0D9E8 !important;
+  border-color: #D0D9E8 !important;
+  color: #8A9BB5 !important;
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+  pointer-events: none;
+}
+
+/* O wrapper mantém pointer-events para o tooltip funcionar */
+#submitDocBtnWrapper {
+  cursor: not-allowed;
+  display: inline-block;
+}
+
+/* Estado ATIVO */
+#submitDocBtn:not(:disabled) {
+  /* !important necessário: mesmo motivo — Bootstrap .btn-primary tem alta especificidade */
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
+  box-shadow: 0 4px 14px rgba(74, 130, 164, 0.35) !important;
+  pointer-events: auto;
+  transition: all 0.2s ease;
+}
+
+#submitDocBtn:not(:disabled):hover {
+  background-color: var(--primary-dark) !important;
+  border-color: var(--primary-dark) !important;
+  box-shadow: 0 6px 20px rgba(74, 130, 164, 0.45) !important;
+  transform: translateY(-1px);
+}
+
+/* ===========================================
+   12. FOOTER
+   =========================================== */
+footer.site-footer {
+  /* !important necessário: Bootstrap .bg-dark ou classes inline podem sobrescrever */
+  background-color: #1A2233 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+footer.site-footer .footer-brand {
+  color: #FFFFFF;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+footer.site-footer .footer-tagline {
+  color: #8FA0B8;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+footer.site-footer .footer-heading {
+  color: #FFFFFF;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+footer.site-footer .footer-link {
+  color: #8FA0B8;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.2s ease;
+  display: inline-block;
+}
+
+footer.site-footer .footer-link:hover {
+  color: #FFFFFF;
+}
+
+footer.site-footer .footer-text {
+  color: #8FA0B8;
+  font-size: 0.875rem;
+}
+
+footer.site-footer .footer-copyright {
+  color: #5A6A85;
+  font-size: 0.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+footer.site-footer .footer-emergency-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #F08080;
+  font-size: 0.875rem;
+}
+
+/* Círculo do ícone no footer */
+footer.site-footer .footer-brand-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #2A3650;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+footer.site-footer .footer-brand-circle i {
+  /* !important necessário: Bootstrap text-* utilities sobrescreveriam a cor do ícone */
+  color: #8FBCD4 !important;
+  font-size: 1.05rem;
+}
+
+/* ===========================================
+   13. PREFERÊNCIA DE FONTE: TOGGLE UI (Perfil)
+   =========================================== */
+.font-size-toggle {
+  display: inline-flex;
+  align-items: stretch;
+  border: 2px solid #D0D9E8;
+  border-radius: 0.6rem;
+  overflow: hidden;
+  background: #F8FAFC;
+}
+
+.font-size-toggle input[type="radio"] {
+  display: none;
+}
+
+.font-size-toggle label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.25rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: #8A9BB5;
+  transition: all 0.2s ease;
+  border: none;
+  background: transparent;
+  user-select: none;
+}
+
+.font-size-toggle label:first-of-type {
+  border-right: 2px solid #D0D9E8;
+}
+
+.font-size-toggle input[type="radio"]:checked + label {
+  background: var(--primary-color);
+  color: white;
+}
+
+.font-size-toggle .label-aa-medium { font-size: 0.85rem; }
+.font-size-toggle .label-aa-large  { font-size: 1.1rem; }

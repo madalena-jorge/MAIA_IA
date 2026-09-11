@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <rect width="32" height="32" rx="8" fill="#4A82A4"/>
+  <!-- Heart with pulse (Bootstrap bi-heart-pulse-fill adapted) -->
+  <path d="M16 25s-9-5.5-9-12a6 6 0 0 1 9-5.2A6 6 0 0 1 25 13c0 6.5-9 12-9 12z" fill="white" opacity="0.9"/>
+  <!-- Pulse line across heart -->
+  <polyline points="10,15 12.5,15 14,12 15.5,18 17,13 18.5,15 22,15" stroke="#4A82A4" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

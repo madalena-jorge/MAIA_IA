@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recursos Educativos - CareBridge</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<!-- Menu de Navegação Global -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-primary d-flex align-items-center gap-2" href="dashboard.html">
+      <div class="d-flex align-items-center justify-content-center bg-primary bg-opacity-10 rounded-circle navbar-brand-icon">
+        <i class="bi bi-heart-pulse-fill text-primary"></i>
+      </div>
+      <span style="letter-spacing: -0.5px;">CareBridge</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="dashboard.html" data-i18n="nav.home"><i class="bi bi-house"></i> Início</a></li>
+        <li class="nav-item"><a class="nav-link" href="allycare.html" data-i18n="nav.chat"><i class="bi bi-chat-heart"></i> AllyCare Chat</a></li>
+        <li class="nav-item"><a class="nav-link" href="profile.html" data-i18n="nav.profile"><i class="bi bi-person"></i> O Meu Perfil</a></li>
+        <li class="nav-item"><a class="nav-link" href="community.html" data-i18n="nav.community"><i class="bi bi-people"></i> Comunidade</a></li>
+        <li class="nav-item"><a class="nav-link active" href="resources.html" data-i18n="nav.resources"><i class="bi bi-book"></i> Recursos</a></li>
+        <li class="nav-item"><a class="nav-link nav-logout" href="#" onclick="logout()" data-i18n="nav.logout"><i class="bi bi-box-arrow-right"></i> Sair</a></li>
+      </ul>
+      </div>
+  </div>
+</nav>
+
+<div class="container my-5 flex-grow-1">
+  <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+    <div>
+      <h3 class="fw-bold text-dark mb-1"><i class="bi bi-book-half text-primary me-2"></i><span data-i18n="res.title">Biblioteca de Recursos</span></h3>
+      <p class="text-muted small mb-0" data-i18n="res.subtitle">Artigos de base científica, literatura clínica e manuais práticos sobre a Demência.</p>
+    </div>
+    <!-- Botão visível apenas para Admins -->
+    <button class="btn btn-primary d-none" id="addDocBtn" data-bs-toggle="modal" data-bs-target="#uploadDocModal" data-i18n="res.add_doc">
+      Adicionar Documento
+    </button>
+  </div>
+
+  <!-- Barra de Pesquisa e Filtros -->
+  <div class="card border-0 rounded-4 shadow-sm p-3 mb-4">
+    <div class="row g-3">
+      <div class="col-md-8">
+        <div class="input-group">
+          <span class="input-group-text bg-light border-0 text-muted"><i class="bi bi-search"></i></span>
+          <input type="text" id="searchBar" class="form-control bg-light border-0" data-i18n="res.search_placeholder" placeholder="Pesquisar por título ou descrição...">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <select id="categoryFilter" class="form-select bg-light border-0">
+          <option value="" data-i18n="res.all_categories">Todas as Categorias</option>
+          <option value="Médico" data-i18n="res.cat_medical">Artigo Médico</option>
+          <option value="Manual" data-i18n="res.cat_manual">Manual Prático</option>
+          <option value="Orientação" data-i18n="res.cat_daily">Orientação Diária</option>
+          <option value="Estudo" data-i18n="res.cat_study">Estudo Académico</option>
+          <option value="Recurso Externo" data-i18n="res.cat_external">Recurso Externo</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lista/Grelha de Documentos -->
+  <div class="row g-4" id="documentsGrid">
+    <div class="text-center p-5">
+      <div class="spinner-border text-primary" role="status"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para Adicionar Documentos (Admin) -->
+<div class="modal fade" id="uploadDocModal" tabindex="-1" aria-labelledby="uploadDocModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 border-0 shadow">
+      <div class="modal-header border-0 pb-0 pt-4 px-4">
+        <h5 class="modal-title fw-bold text-dark" id="uploadDocModalLabel"><i class="bi bi-file-earmark-medical text-primary me-2"></i><span data-i18n="res.modal_title">Adicionar Artigo / Documento</span></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <form id="addDocForm">
+          <div class="mb-3">
+            <label for="docTitle" class="form-label small fw-semibold text-muted mb-1" data-i18n="res.modal_doc_title">Título do Documento <span class="text-danger fw-bold">*</span></label>
+            <input type="text" class="form-control bg-light" id="docTitle" data-i18n="res.modal_doc_title_ph" placeholder="Ex: Guia de Comunicação na Demência" required>
+          </div>
+          <div class="mb-3">
+            <label for="docCategory" class="form-label small fw-semibold text-muted mb-1" data-i18n="res.modal_category">Categoria</label>
+            <select class="form-select bg-light" id="docCategory" required>
+              <option value="Médico" data-i18n="res.cat_medical">Artigo Médico</option>
+              <option value="Manual" data-i18n="res.cat_manual">Manual Prático</option>
+              <option value="Orientação" data-i18n="res.cat_daily">Orientação Diária</option>
+              <option value="Estudo" data-i18n="res.cat_study">Estudo Académico</option>
+              <option value="Recurso Externo" data-i18n="res.cat_external">Recurso Externo</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="docDescription" class="form-label small fw-semibold text-muted mb-1" data-i18n="res.modal_desc">Descrição Breve <span class="text-danger fw-bold">*</span></label>
+            <textarea class="form-control bg-light" id="docDescription" rows="3" data-i18n="res.modal_desc_ph" placeholder="Indique resumidamente sobre o que trata este recurso..." required></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label small fw-semibold text-muted mb-1" data-i18n="res.modal_file">Ficheiro do Documento <span class="text-danger fw-bold">*</span></label>
+            <!-- Dropzone Area -->
+            <div class="dropzone-area" id="docDropzone">
+              <input type="file" id="docFileInput" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt">
+              <div id="dropzonePrompt">
+                <div class="dropzone-icon"><i class="bi bi-cloud-arrow-up-fill"></i></div>
+                <p class="dropzone-text mb-0"><strong data-i18n="res.modal_upload_text">Clica</strong> ou arrasta para carregar</p>
+                <p class="dropzone-hint" data-i18n="res.modal_upload_hint">PDF, DOCX, PPT — até 20 MB</p>
+              </div>
+            </div>
+            <!-- File Preview -->
+            <div class="dropzone-file-preview d-none" id="docFilePreview">
+              <div class="dropzone-file-icon" id="docFileIcon"><i class="bi bi-file-earmark-pdf-fill text-danger"></i></div>
+              <div class="dropzone-file-info">
+                <div class="dropzone-file-name" id="docFileName">—</div>
+                <div class="dropzone-file-size" id="docFileSize">—</div>
+              </div>
+              <button type="button" class="dropzone-remove-btn" id="docFileRemoveBtn" title="Remover ficheiro">
+                <i class="bi bi-x-circle-fill"></i>
+              </button>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-2">
+            <p class="text-muted mb-0" style="font-size:0.78rem;"><span class="text-danger fw-bold">*</span> <span data-i18n="res.modal_required">Campos obrigatórios</span></p>
+            <div class="d-flex gap-2">
+              <button type="button" class="btn btn-outline-secondary rounded-3" data-bs-dismiss="modal" data-i18n="res.modal_cancel">Cancelar</button>
+              <div id="submitDocBtnWrapper"
+                   title="Preencha o título, a descrição e selecione um ficheiro para continuar"
+                   data-bs-toggle="tooltip" data-bs-placement="top"
+                   style="display:inline-block;">
+                <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold" id="submitDocBtn" disabled data-i18n="res.modal_submit">Carregar Artigo</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para Visualização de Documentos -->
+<div class="modal fade" id="viewDocModal" tabindex="-1" aria-labelledby="viewDocModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-4 border-0 shadow">
+      <div class="modal-header border-0 pb-0 pt-4 px-4">
+        <h5 class="modal-title fw-bold text-dark" id="viewDocModalLabel" data-i18n="res.view_modal_title">Visualizar Documento</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <div class="bg-light p-3 rounded-3 mb-3 border border-opacity-10 border-secondary">
+          <p class="mb-1"><strong data-i18n="res.view_category_label">Categoria:</strong> <span class="badge bg-primary bg-opacity-10 text-primary" id="viewDocCategory">-</span></p>
+          <p class="mb-0 text-muted small"><strong data-i18n="res.view_added_by">Adicionado por:</strong> <span id="viewDocUploader">-</span> em <span id="viewDocDate">-</span></p>
+        </div>
+        <h6 class="fw-bold text-dark" data-i18n="res.view_desc_label">Descrição:</h6>
+        <p id="viewDocDescription" class="text-muted leading-relaxed mb-4">-</p>
+        
+        <div class="alert alert-info border-0 rounded-3 small mb-0 d-flex align-items-center gap-2">
+          <i class="bi bi-info-circle-fill text-info fs-5"></i>
+          <div>O ficheiro em anexo está associado no caminho local <code id="viewDocPath">-</code>. Poderá utilizá-lo na integração do assistente de IA.</div>
+        </div>
+      </div>
+      <div class="modal-footer border-0 px-4 pb-4 pt-0">
+        <button type="button" class="btn btn-secondary rounded-3" data-bs-dismiss="modal" data-i18n="res.view_close">Fechar</button>
+        <a id="viewDocDownloadLink" href="#" target="_blank" class="btn btn-primary rounded-3 fw-bold" data-i18n="res.view_open">Abrir / Transferir</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer text-light py-5 mt-auto">
+  <div class="container">
+    <div class="row g-4 pb-3 justify-content-between">
+      <div class="col-md-6 col-lg-5">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div class="footer-brand-circle">
+            <i class="bi bi-heart-pulse-fill"></i>
+          </div>
+          <span class="footer-brand">CareBridge</span>
+        </div>
+        <p class="footer-tagline mb-0" style="max-width:340px;" data-i18n="footer.tagline">Plataforma académica de apoio empático e estruturado a cuidadores de pessoas com demência.</p>
+      </div>
+      <div class="col-md-5 col-lg-4">
+        <p class="footer-heading mb-3" data-i18n="footer.support_lines">Linhas de Apoio</p>
+        <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
+          <li class="footer-text"><i class="bi bi-telephone text-primary me-2"></i><span data-i18n="footer.alzheimer">Alzheimer Portugal:</span> <strong class="text-white">213 610 460</strong></li>
+          <li class="footer-emergency-badge"><i class="bi bi-telephone-fill me-2"></i><span data-i18n="footer.emergency">Emergência Médica:</span> <strong>112</strong></li>
+          <li class="mt-2">
+            <span style="font-size:0.75rem; color:#8FA0B8; font-style:italic;" data-i18n="footer.disclaimer">⚠️ Não substitui aconselhamento médico profissional.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-copyright text-center">
+      &copy; <script>document.write(new Date().getFullYear())</script> <span data-i18n="footer.rights">CareBridge. Todos os direitos reservados.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/resources.js"></script>
+<script>
+  function logout() {
+    localStorage.removeItem('carebridge_token');
+    localStorage.removeItem('carebridge_role');
+    window.location.href = 'index.html';
+  }
+
+  // T1: Inicializar tooltip Bootstrap no wrapper do botão de submissão
+  document.addEventListener('DOMContentLoaded', () => {
+    const tooltipEl = document.getElementById('submitDocBtnWrapper');
+    if (tooltipEl) {
+      const tt = new bootstrap.Tooltip(tooltipEl, { trigger: 'hover focus' });
+
+      const submitBtn = document.getElementById('submitDocBtn');
+      if (submitBtn) {
+        const observer = new MutationObserver(() => {
+          if (!submitBtn.disabled) tt.disable();
+          else tt.enable();
+        });
+        observer.observe(submitBtn, { attributes: true, attributeFilter: ['disabled'] });
+      }
+    }
+  });
+</script>
+</body>
+</html>

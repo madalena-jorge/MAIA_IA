@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil - CareBridge</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<!-- Menu de Navegação Global -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-primary d-flex align-items-center gap-2" href="dashboard.html">
+      <div class="d-flex align-items-center justify-content-center bg-primary bg-opacity-10 rounded-circle navbar-brand-icon">
+        <i class="bi bi-heart-pulse-fill text-primary"></i>
+      </div>
+      <span style="letter-spacing: -0.5px;">CareBridge</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="dashboard.html" data-i18n="nav.home"><i class="bi bi-house"></i> Início</a></li>
+        <li class="nav-item"><a class="nav-link" href="allycare.html" data-i18n="nav.chat"><i class="bi bi-chat-heart"></i> AllyCare Chat</a></li>
+        <li class="nav-item"><a class="nav-link active" href="profile.html" data-i18n="nav.profile"><i class="bi bi-person"></i> O Meu Perfil</a></li>
+        <li class="nav-item"><a class="nav-link" href="community.html" data-i18n="nav.community"><i class="bi bi-people"></i> Comunidade</a></li>
+        <li class="nav-item"><a class="nav-link" href="resources.html" data-i18n="nav.resources"><i class="bi bi-book"></i> Recursos</a></li>
+        <li class="nav-item"><a class="nav-link nav-logout" href="#" onclick="logout()" data-i18n="nav.logout"><i class="bi bi-box-arrow-right"></i> Sair</a></li>
+      </ul>
+      </div>
+  </div>
+</nav>
+
+<div class="container my-5 flex-grow-1">
+  <h3 class="fw-bold mb-4 text-dark"><i class="bi bi-person-badge text-primary me-2"></i><span data-i18n="profile.page_title">Área do Utilizador</span></h3>
+
+  <!-- Navegação por separadores (Tabs) -->
+  <ul class="nav nav-pills nav-pills-custom mb-4" id="profileTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" data-i18n="profile.tab_profile"> Perfil</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history-tab-pane" type="button" role="tab" data-i18n="profile.tab_history"> Histórico de Conversas</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="emergency-tab" data-bs-toggle="tab" data-bs-target="#emergency-tab-pane" type="button" role="tab" data-i18n="profile.tab_emergency"> Informação de Emergência</button>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="profileTabsContent">
+    <!-- TAB PERFIL -->
+    <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
+      <div class="row">
+        <!-- Perfil do Cuidador -->
+        <div class="col-md-6 mb-4">
+          <div class="card card-accent-primary shadow-sm h-100 rounded-4 border-0">
+            <div class="card-header bg-white border-0 pt-4 pb-0 d-flex align-items-center gap-2">
+              <i class="bi bi-person-heart text-primary fs-4"></i>
+              <h5 class="fw-bold text-dark m-0" data-i18n="profile.caregiver_title">Perfil do Cuidador</h5>
+            </div>
+            <div class="card-body" id="caregiverProfileArea">
+              <div class="text-center my-4">
+                 <div class="spinner-border text-primary" role="status"><span class="visually-hidden">A carregar...</span></div>
+              </div>
+            </div>
+            <div class="card-footer bg-white border-0 pb-4 pt-0">
+              <button class="btn btn-outline-primary w-100 fw-bold rounded-3" onclick="window.location.href='create-profile.html?edit=caregiver'" data-i18n="profile.caregiver_edit_btn">Editar Perfil do Cuidador</button>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Perfil do Paciente -->
+        <div class="col-md-6 mb-4">
+          <div class="card card-accent-info shadow-sm h-100 rounded-4 border-0">
+            <div class="card-header bg-white border-0 pt-4 pb-0 d-flex align-items-center gap-2">
+              <i class="bi bi-person-wheelchair text-info fs-4"></i>
+              <h5 class="fw-bold text-dark m-0" data-i18n="profile.patient_title">Pessoa com Demência</h5>
+            </div>
+            <div class="card-body" id="patientProfileArea">
+              <div class="text-center my-4">
+                 <div class="spinner-border text-info" role="status"><span class="visually-hidden">A carregar...</span></div>
+              </div>
+            </div>
+            <div class="card-footer bg-white border-0 pb-4 pt-0">
+              <button class="btn btn-outline-info w-100 fw-bold rounded-3" onclick="window.location.href='create-profile.html?edit=patient'" data-i18n="profile.patient_edit_btn">Atualizar Dados da Pessoa Cuidada</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preferências de Acessibilidade -->
+      <div class="row mt-3 mb-4" id="preferencesSection">
+        <div class="col-12">
+          <div class="card card-accent-primary border-0 rounded-4 shadow-sm">
+            <div class="card-header bg-white border-0 pt-4 pb-0 d-flex align-items-center gap-2">
+              <i class="bi bi-type text-primary fs-4"></i>
+              <h5 class="fw-bold text-dark m-0" data-i18n="profile.access_title">Preferências de Acessibilidade</h5>
+            </div>
+            <div class="card-body pb-4">
+              <p class="text-muted small mb-3" data-i18n="profile.access_desc">Escolha o tamanho de letra mais confortável para si. Esta preferência é guardada no seu perfil e aplicada em todas as páginas.</p>
+              <div class="d-flex align-items-center gap-4 flex-wrap">
+                <span class="fw-semibold text-dark" style="font-size: 0.9rem;" data-i18n="profile.font_label">Tamanho de Letra:</span>
+                <div class="font-size-toggle" id="fontSizeToggle">
+                  <input type="radio" name="fontSize" id="fontSizeMedium" value="medium">
+                  <label for="fontSizeMedium" class="label-aa-medium">
+                    <span>Aa</span> <span data-i18n="profile.font_medium">Médio</span>
+                  </label>
+                  <input type="radio" name="fontSize" id="fontSizeLarge" value="large">
+                  <label for="fontSizeLarge" class="label-aa-large">
+                    <span>Aa</span> <span data-i18n="profile.font_large">Grande</span>
+                  </label>
+                </div>
+                <span class="text-muted small" id="fontSaveFeedback" style="display:none;">
+                  <i class="bi bi-check-circle-fill text-success me-1"></i><span data-i18n="profile.font_saved">Guardado!</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Medicação -->
+      <div class="row mt-2" id="medicalDetailsSection">
+        <div class="col-md-12 mb-4">
+          <div class="card card-accent-danger shadow-sm border-0 rounded-4">
+            <div class="card-header bg-white border-bottom pt-4 pb-3 d-flex align-items-center gap-2">
+              <i class="bi bi-capsule text-danger fs-4"></i>
+              <h5 class="fw-bold text-dark m-0" data-i18n="profile.med_title">Medicação Atual</h5>
+            </div>
+            <div class="card-body p-0">
+              <ul class="list-group list-group-flush rounded-bottom-4" id="medicationsList">
+                <li class="list-group-item text-muted p-4 text-center" data-i18n="profile.med_empty">Nenhuma medicação registada.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB HISTÓRICO -->
+    <div class="tab-pane fade" id="history-tab-pane" role="tabpanel" aria-labelledby="history-tab">
+      <div class="card shadow-sm border-0 rounded-4 p-4">
+        <h5 class="fw-bold text-dark mb-3"><i class="bi bi-clock-history text-primary me-2"></i><span data-i18n="profile.history_title">Sessões de Chat Recentes</span></h5>
+        <p class="text-muted small" data-i18n="profile.history_desc">Aqui pode consultar o histórico de interações com o assistente AllyCare para relatórios médicos.</p>
+        <div class="list-group list-group-flush" id="tabChatHistoryList">
+          <div class="text-center p-4">
+            <div class="spinner-border text-primary" role="status"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB INFORMAÇÃO DE EMERGÊNCIA -->
+    <div class="tab-pane fade" id="emergency-tab-pane" role="tabpanel" aria-labelledby="emergency-tab">
+      <div class="card card-accent-danger shadow-sm border-0 rounded-4 p-4">
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <div class="d-flex align-items-center justify-content-center bg-danger bg-opacity-10 text-danger rounded-circle" style="width: 50px; height: 50px;">
+            <i class="bi bi-shield-fill-exclamation fs-3"></i>
+          </div>
+          <div>
+            <h5 class="fw-bold text-dark mb-0" data-i18n="profile.emergency_title">Ficha Rápida de Emergência</h5>
+            <small class="text-muted" data-i18n="profile.emergency_subtitle">Acesso instantâneo a informações críticas de saúde em caso de urgência.</small>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 border-end">
+            <h6 class="fw-bold text-danger mb-3"><i class="bi bi-telephone-outbound me-2"></i><span data-i18n="profile.emergency_contacts_label">Contactos de Emergência</span></h6>
+            <div class="bg-light p-3 rounded-3" id="quickEmergencyContacts">
+              <p class="mb-2"><strong data-i18n="profile.emergency_medical">Emergência Nacional: 112</strong></p>
+              <p class="mb-0"><strong data-i18n="profile.emergency_caregiver">Contacto do Cuidador / Familiar:</strong> <span id="quickCaregiverPhone">-</span></p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h6 class="fw-bold text-danger mb-3"><i class="bi bi-clipboard2-pulse me-2"></i><span data-i18n="profile.emergency_medical_label">Condição Médica & Alergias</span></h6>
+            <div class="bg-light p-3 rounded-3">
+              <p class="mb-2"><strong data-i18n="profile.emergency_allergies">Alergias Conhecidas:</strong> <span id="quickAlergias" class="badge bg-danger bg-opacity-10 text-danger fw-semibold">-</span></p>
+              <p class="mb-2"><strong data-i18n="profile.emergency_diagnosis">Diagnóstico Principal:</strong> <span id="quickDiagnostico">-</span></p>
+              <p class="mb-0"><strong data-i18n="profile.emergency_behaviour">Instruções de Comportamento:</strong> <span id="quickComportamentos" class="text-muted small">-</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer text-light py-5 mt-auto">
+  <div class="container">
+    <div class="row g-4 pb-3 justify-content-between">
+      <div class="col-md-6 col-lg-5">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div class="footer-brand-circle">
+            <i class="bi bi-heart-pulse-fill"></i>
+          </div>
+          <span class="footer-brand">CareBridge</span>
+        </div>
+        <p class="footer-tagline mb-0" style="max-width:340px;" data-i18n="footer.tagline">Plataforma académica de apoio empático e estruturado a cuidadores de pessoas com demência.</p>
+      </div>
+      <div class="col-md-5 col-lg-4">
+        <p class="footer-heading mb-3" data-i18n="footer.support_lines">Linhas de Apoio</p>
+        <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
+          <li class="footer-text"><i class="bi bi-telephone text-primary me-2"></i><span data-i18n="footer.alzheimer">Alzheimer Portugal:</span> <strong class="text-white">213 610 460</strong></li>
+          <li class="footer-emergency-badge"><i class="bi bi-telephone-fill me-2"></i><span data-i18n="footer.emergency">Emergência Médica:</span> <strong>112</strong></li>
+          <li class="mt-2">
+            <span style="font-size:0.75rem; color:#8FA0B8; font-style:italic;" data-i18n="footer.disclaimer">⚠️ Não substitui aconselhamento médico profissional.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-copyright text-center">
+      &copy; <script>document.write(new Date().getFullYear())</script> <span data-i18n="footer.rights">CareBridge. Todos os direitos reservados.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/profile.js"></script>
+<script>
+  function logout() {
+    localStorage.removeItem('carebridge_token');
+    localStorage.removeItem('carebridge_role');
+    window.location.href = 'index.html';
+  }
+</script>
+</body>
+</html>

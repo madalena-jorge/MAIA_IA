@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareBridge — Iniciar Sessão</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="description" content="CareBridge: plataforma de apoio a cuidadores informais de pessoas com demência.">
+  
+  <!-- CSS Externo: Bootstrap para responsividade e consistência -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Estilos Customizados (Mantidos limpos e sem redundâncias) -->
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body class="d-flex align-items-center py-4" style="min-height: 100vh; background: radial-gradient(circle at 50% 50%, #fdfdfd 0%, #ebf2f6 100%);">
+
+<main class="form-signin w-100 m-auto" style="max-width: 440px; padding: 20px;">
+  <div class="card p-4 shadow border-0 rounded-4">
+    <div class="text-center mb-4">
+      <div class="d-inline-flex align-items-center justify-content-center bg-light rounded-circle mb-3" style="width: 80px; height: 80px; border: 1px solid rgba(74, 130, 164, 0.1);">
+        <i class="bi bi-heart-pulse-fill text-primary"></i>
+      </div>
+      <h1 class="h3 mb-2 fw-bold mt-2 text-dark" data-i18n="login.title">Welcome to CareBridge</h1>
+      <p class="text-muted small" data-i18n="login.subtitle">Apoio Empático para Cuidadores de Demência</p>
+    </div>
+
+    <!-- Formulário de Autenticação -->
+    <form id="loginForm">
+      <div class="mb-3">
+        <label for="floatingInput" class="form-label fw-semibold text-muted small mb-1" data-i18n="login.email">Endereço de Email</label>
+        <div class="input-group">
+          <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-envelope"></i></span>
+          <input type="email" class="form-control border-start-0 bg-light" id="floatingInput" placeholder="nome@exemplo.com" required>
+        </div>
+      </div>
+      
+      <div class="mb-4">
+        <label for="floatingPassword" class="form-label fw-semibold text-muted small mb-1" data-i18n="login.password">Palavra-passe</label>
+        <div class="input-group">
+          <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-lock"></i></span>
+          <input type="password" class="form-control border-start-0 border-end-0 bg-light" id="floatingPassword" placeholder="Palavra-passe" required data-i18n="login.password">
+          <button class="btn btn-light border-start-0 border text-muted" type="button" id="togglePasswordBtn">
+            <i class="bi bi-eye" id="togglePasswordIcon"></i>
+          </button>
+        </div>
+      </div>
+
+      <button class="btn btn-primary w-100 py-2.5 mb-3 fw-bold shadow-sm" type="submit" data-i18n="login.submit">Iniciar Sessão</button>
+      
+      <div class="d-flex align-items-center my-3">
+        <hr class="flex-grow-1 text-muted opacity-25 m-0">
+        <span class="mx-3 text-muted small fw-semibold text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;" data-i18n="login.continue_with">Or continue with</span>
+        <hr class="flex-grow-1 text-muted opacity-25 m-0">
+      </div>
+      
+      <div class="d-flex flex-column gap-2 mb-3">
+        <button type="button" class="btn btn-outline-secondary w-100 py-2"><i class="bi bi-google me-2 text-danger"></i> Google</button>
+        <button type="button" class="btn btn-outline-secondary w-100 py-2"><i class="bi bi-facebook me-2 text-primary"></i> Facebook</button>
+      </div>
+      
+      <div class="text-center mt-4">
+        <a href="create-profile.html" class="text-decoration-none small fw-semibold text-primary" data-i18n="login.no_account">Don't have an account? Sign up</a>
+      </div>
+    </form>
+    
+    <div class="mt-4 p-3 demo-account-card border">
+      <small class="fw-bold d-block mb-2 text-center text-primary" data-i18n="login.demo_accounts"><i class=""></i> Contas de Demonstração:</small>
+      <div class="row g-2">
+        <div class="col-6 border-end">
+          <span class="fw-semibold text-dark d-block" style="font-size: 0.75rem;">Cuidador:</span>
+          <code class="text-muted" style="font-size: 0.75rem;">demo@carebridge.com</code>
+          <code class="text-muted d-block" style="font-size: 0.75rem;">demo123</code>
+        </div>
+        <div class="col-6 ps-2">
+          <span class="fw-semibold text-dark d-block" style="font-size: 0.75rem;">Médico/Admin:</span>
+          <code class="text-muted" style="font-size: 0.75rem;">demoadmin@carebridge.com</code>
+          <code class="text-muted d-block" style="font-size: 0.75rem;">demoadmin123</code>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="js/utils.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/auth.js"></script>
+<script>
+  // Script simples de toggle de password inline
+  document.getElementById('togglePasswordBtn').addEventListener('click', function() {
+    const pwdInput = document.getElementById('floatingPassword');
+    const icon = document.getElementById('togglePasswordIcon');
+    if (pwdInput.type === 'password') {
+      pwdInput.type = 'text';
+      icon.classList.remove('bi-eye');
+      icon.classList.add('bi-eye-slash');
+    } else {
+      pwdInput.type = 'password';
+      icon.classList.remove('bi-eye-slash');
+      icon.classList.add('bi-eye');
+    }
+  });
+</script>
+</body>
+</html>
