@@ -17,6 +17,7 @@ import chatRoutes from './routes/chat.js';
 import profileRoutes from './routes/profile.js';
 import resourceRoutes from './routes/resources.js';
 import { initializeDatabase } from './config/database.js';
+import { initFirebaseAdmin } from './config/firebaseAdmin.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -52,6 +53,8 @@ async function startServer() {
     if (!process.env.OPENROUTER_API_KEY) {
       console.warn('⚠️  OPENROUTER_API_KEY não definida — o AllyCare não conseguirá responder.');
     }
+
+    initFirebaseAdmin();
 
     // Initialize SQLite Database
     await initializeDatabase();

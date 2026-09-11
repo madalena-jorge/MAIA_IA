@@ -12,6 +12,7 @@
   "login.password": "Password",
   "login.submit": "Sign In",
   "login.continue_with": "Or continue with",
+  "login.google": "Google",
   "login.no_account": "Don't have an account? Sign up",
   "login.demo_accounts": "Demo Accounts:",
 

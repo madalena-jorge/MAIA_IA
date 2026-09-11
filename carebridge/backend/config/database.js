@@ -113,6 +113,19 @@ export async function initializeDatabase() {
     // Ignorar se já existir
   }
 
+  // Autenticação Google (Firebase)
+  try {
+    await database.run("ALTER TABLE users ADD COLUMN auth_provider TEXT DEFAULT 'local'");
+  } catch (error) {
+    // Ignorar se já existir
+  }
+
+  try {
+    await database.run('ALTER TABLE users ADD COLUMN firebase_uid TEXT UNIQUE');
+  } catch (error) {
+    // Ignorar se já existir
+  }
+
   // Semeia a conta demo de cuidador
   const bcrypt = await import('bcrypt');
   const demoEmail = 'demo@carebridge.com';
