@@ -92,10 +92,17 @@ async function signInWithGoogle() {
 
     alert(data.error || 'Erro ao iniciar sessão com Google.');
   } catch (error) {
-    if (error.code !== 'auth/popup-closed-by-user') {
-      console.error('Google sign-in error:', error);
-      alert('Erro ao iniciar sessão com Google. Verifique a configuração Firebase.');
-    }
+    if (error.code === 'auth/popup-closed-by-user') return;
+
+    console.error('Google sign-in error:', error);
+
+    const messages = {
+      'auth/operation-not-allowed': 'O login Google não está ativado no Firebase Console → Authentication → Sign-in method → Google.',
+      'auth/unauthorized-domain': 'Este domínio não está autorizado no Firebase. Adicione maia-ia.onrender.com em Domínios autorizados.',
+      'auth/popup-blocked': 'O browser bloqueou a janela Google. Permita popups para este site.',
+    };
+
+    alert(messages[error.code] || error.message || 'Erro ao iniciar sessão com Google.');
   } finally {
     googleBtn.disabled = false;
     googleBtn.innerHTML = originalHtml;
