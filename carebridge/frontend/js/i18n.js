@@ -65,7 +65,7 @@ async function setLanguage(lang) {
   const token = localStorage.getItem('carebridge_token');
   if (token) {
     try {
-      await fetch('http://localhost:3000/api/profile/preferences', {
+      await fetch(`${window.API_URL}/profile/preferences`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const token = localStorage.getItem('carebridge_token');
   if (token) {
     try {
-      const response = await fetch('http://localhost:3000/api/profile', {
+      const response = await fetch(`${window.API_URL}/profile`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (response.ok) {

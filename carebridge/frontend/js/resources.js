@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           formData.append('document', selectedFile);
 
           const token = localStorage.getItem('carebridge_token');
-          response = await fetch('http://localhost:3000/api/resources/upload', {
+          response = await fetch(`${window.API_URL}/resources/upload`, {
             method: 'POST',
             headers: {
               'Authorization': `Bearer ${token}`
@@ -302,7 +302,7 @@ function viewDocumentDetail(docId) {
 
   const downloadLink = document.getElementById('viewDocDownloadLink');
   if (doc.file_path) {
-    const href = doc.file_path.startsWith('http') ? doc.file_path : `http://localhost:3000/${doc.file_path}`;
+    const href = doc.file_path.startsWith('http') ? doc.file_path : `${window.BASE_URL}/${doc.file_path}`;
     downloadLink.href = href;
     downloadLink.classList.remove('disabled');
   } else {

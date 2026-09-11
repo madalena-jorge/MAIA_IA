@@ -7,7 +7,10 @@
  * Todos os pedidos autorizados injetam automaticamente o Token JWT no cabeçalho.
  */
 
-const API_URL = 'http://localhost:3000/api';
+// Usa o mesmo domínio do site (funciona em localhost e no Render)
+const API_URL = `${window.location.origin}/api`;
+window.API_URL = API_URL;
+window.BASE_URL = window.location.origin;
 
 async function fetchWithAuth(endpoint, options = {}) {
   const token = localStorage.getItem('carebridge_token');
