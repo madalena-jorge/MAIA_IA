@@ -7,8 +7,8 @@
  * Todos os pedidos autorizados injetam automaticamente o Token JWT no cabeçalho.
  */
 
-// Usa o mesmo domínio do site (funciona em localhost e no Render)
-const API_URL = `${window.location.origin}/api`;
+// Caminho relativo — funciona em localhost e no Render (mesmo domínio)
+const API_URL = '/api';
 window.API_URL = API_URL;
 window.BASE_URL = window.location.origin;
 

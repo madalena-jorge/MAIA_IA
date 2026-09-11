@@ -75,7 +75,7 @@ async function callOpenRouter(messages, options = {}) {
           headers: {
             'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
             'Content-Type': 'application/json',
-            'HTTP-Referer': 'https://carebridge.academic',
+            'HTTP-Referer': process.env.APP_URL || 'https://maia-ia.onrender.com',
             'X-Title': 'CareBridge - AllyCare Assistant',
           },
           body: JSON.stringify({

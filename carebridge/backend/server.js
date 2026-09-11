@@ -49,6 +49,10 @@ const PORT = process.env.PORT || 3000;
 
 async function startServer() {
   try {
+    if (!process.env.OPENROUTER_API_KEY) {
+      console.warn('⚠️  OPENROUTER_API_KEY não definida — o AllyCare não conseguirá responder.');
+    }
+
     // Initialize SQLite Database
     await initializeDatabase();
     console.log('Database initialized successfully.');
